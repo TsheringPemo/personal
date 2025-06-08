@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/css/adminDashboard.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <span class="admin-label">bhutaneseRECIPE - Admin</span>
+      <div>
+        <a href="/admin/dashboard" class="nav-link">Dashboard</a>
+        <a href="/admin/users" class="nav-link">User Management</a>
+        <form action="/logout" method="POST" style="display: inline;">
+          <button type="submit" class="logout-btn">Logout</button>
+        </form>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="dashboard-content">
+        <!-- Pending Count Card -->
+        <div class="card pending-count-card">
+          <div class="card-title">Pending Recipes</div>
+          <div class="card-value"><%= pendingRecipes.length %></div>
+        </div>
+
+        <!-- Pending Table Section -->
+        <div class="pending-table">
+          <h2>Pending Recipe Approvals</h2>
+          <% if (pendingRecipes.length === 0) { %>
+            <p>No pending recipes to approve.</p>
+          <% } else { %>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Ingredients</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% pendingRecipes.forEach(recipe => { %>
+                    <tr>
+                      <td data-label="ID"><%= recipe.id %></td>
+                      <td data-label="Name"><%= recipe.recipe_name %></td>
+                      <td data-label="Description"><%= recipe.description %></td>
+                      <td data-label="Ingredients"><%= recipe.ingredients %></td>
+                      <td data-label="Image">
+                        <% if (recipe.image) { %>
+                          <img src="<%= recipe.image %>" alt="recipe image" />
+                        <% } else { %>
+                          No image
+                        <% } %>
+                      </td>
+                      <td data-label="Action">
+                        <div class="action-buttons">
+                          <form method="POST" action="/admin/recipes/<%= recipe.id %>/approve" class="inline-form">
+                            <button type="submit" class="btn-approve">Approve</button>
+                          </form>
+                          <form method="POST" action="/admin/recipes/<%= recipe.id %>/reject" class="inline-form">
+                            <button type="submit" class="btn-reject">Reject</button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      &copy; 2025 All Rights Reserved
+    </footer>
+  </div>
+</body>
+</html>

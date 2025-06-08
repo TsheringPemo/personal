@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bhutaneseRECIPE - Home</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <%- include('../partials/header', {path: '/home'}) %>
+
+    <main>
+        <section class="hero">
+            <div class="hero-card">
+                <div class="hero-image-container">
+                    <img src="/images/homepic.png" alt="Bhutanese Food" class="hero-image">
+                </div>
+                <div class="hero-text">
+                    <h1>Share and discover delicious recipes</h1>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-us">
+            <div class="about-card">
+                <h2>About Us</h2>
+                <h3>Welcome to Bhutanese Recipe!</h3>
+                <p>We are a passionate community of food lovers dedicated to preserving and sharing the rich culinary heritage of Bhutan. Our platform makes it easy for anyone whether you're a home cook, a student, or just curious to explore and share traditional Bhutanese dishes.</p>
+            </div>
+        </section>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

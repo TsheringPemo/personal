@@ -1,0 +1,264 @@
+/* Header styling */
+header {
+  background-color: #c8e6c9;
+  color: #000;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header .admin-label {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header nav a {
+  color: #000;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+}
+
+header nav a:hover {
+  color: #2e7d32;
+  background-color: rgba(46, 125, 50, 0.15);
+}
+
+header nav form button {
+  background-color: #000;
+  color: #fff !important;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+header nav form button:hover {
+  background-color: #444;
+}
+
+/* Body & footer layout */
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+
+/* Footer fixed to bottom */
+footer {
+  background-color: #c8e6c9;
+  color: #000;
+  padding: 1rem 2rem;
+  text-align: center;
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+}
+
+/* Users container main styling */
+.users-container {
+  max-width: 1200px;
+  margin: 3rem auto 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Page title */
+.users-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1b5e20; /* dark green */
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  background: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Table head */
+thead tr {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+thead th {
+  padding: 1rem 1.2rem;
+  text-align: left;
+  font-weight: 700;
+  user-select: none;
+}
+
+/* Table body rows */
+tbody tr:nth-child(even) {
+  background-color: #f6faf6;
+}
+
+tbody tr:hover {
+  background-color: #d0e9d0;
+  cursor: pointer;
+}
+
+/* Table data cells */
+tbody td {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+/* Responsive: show labels on mobile */
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  thead tr {
+    display: none;
+  }
+  tbody tr {
+    margin-bottom: 1.5rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 1rem;
+  }
+  tbody td {
+    position: relative;
+    padding-left: 50%;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+  tbody td::before {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 45%;
+    white-space: nowrap;
+    font-weight: 700;
+    color: #2e7d32;
+  }
+  tbody td:nth-of-type(1)::before { content: "ID"; }
+  tbody td:nth-of-type(2)::before { content: "Full Name"; }
+  tbody td:nth-of-type(3)::before { content: "Email"; }
+  tbody td:nth-of-type(4)::before { content: "Verified"; }
+  tbody td:nth-of-type(5)::before { content: "Created At"; }
+  tbody td:nth-of-type(6)::before { content: "Action"; }
+}
+
+/* Delete button */
+.btn-delete {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+/* On mobile, delete button full width */
+@media (max-width: 600px) {
+  .btn-delete {
+    width: 100%;
+    padding: 0.7rem 0;
+  }
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.modal-content p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-actions button {
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#confirmYes {
+  background-color: #e74c3c;
+  color: white;
+}
+
+#confirmYes:hover {
+  background-color: #c0392b;
+}
+
+#confirmNo {
+  background-color: #ccc;
+}
+
+#confirmNo:hover {
+  background-color: #999;
+}

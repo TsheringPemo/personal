@@ -1,0 +1,156 @@
+<header>
+    <nav class="navbar">
+        <div class="logo">bhutaneseRECIPE</div>
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links">
+            <a href="/home" class="<%= path === '/home' ? 'active' : '' %>">Home</a>
+            <a href="/share-recipe" class="<%= path === '/share-recipe' ? 'active' : '' %>">Share Recipe</a>
+            <a href="/recipes" class="<%= path === '/recipes' ? 'active' : '' %>">Recipes</a>
+            <form action="/logout" method="POST" class="logout-form">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+</header>
+
+<style>
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background-color: var(--header-bg);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--text-color);
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .nav-links a {
+        color: var(--text-color);
+        text-decoration: none;
+        position: relative;
+        transition: var(--transition);
+        white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: var(--primary-dark);
+    }
+
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--primary-dark);
+        transition: var(--transition);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+        width: 100%;
+    }
+
+    .logout-form {
+        margin: 0;
+    }
+
+    .logout-btn {
+        background: none;
+        border: 2px solid var(--primary-dark);
+        color: var(--text-color);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: var(--transition);
+        white-space: nowrap;
+    }
+
+    .logout-btn:hover {
+        background-color: var(--primary-dark);
+        color: white;
+    }
+
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 10;
+    }
+
+    .menu-toggle span {
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: var(--transition);
+    }
+
+    @media (max-width: 768px) {
+        .menu-toggle {
+            display: flex;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--header-bg);
+            padding: 1rem;
+            flex-direction: row;
+            justify-content: center;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-links.show {
+            transform: scaleY(1);
+        }
+
+        .nav-links a,
+        .logout-btn {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+        }
+
+        .nav-links {
+            gap: 1rem;
+        }
+    }
+</style>
+
+<script>
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+        document.querySelector('.nav-links').classList.toggle('show');
+    });
+</script>

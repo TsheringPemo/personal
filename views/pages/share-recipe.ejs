@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Share Recipe - bhutaneseRECIPE</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/share-recipe.css" />
+</head>
+<body>
+  <%- include('../partials/header', {path: '/share-recipe'}) %>
+
+  <!-- Success Popup -->
+  <div class="overlay" id="overlay"></div>
+  <div class="popup" id="successPopup">
+    <h2>Success!</h2>
+    <p>Your recipe has been shared successfully.</p>
+    <button class="popup-button" id="okButton">OK</button>
+  </div>
+
+  <main>
+    <div class="share-recipe-container">
+      <h1>Share your Recipes!</h1>
+      <form action="/recipes/share" method="POST" enctype="multipart/form-data" class="share-recipe-form" id="recipeForm">
+        <div class="form-group">
+          <label for="name">Recipe Name</label>
+          <input type="text" id="name" name="recipe_name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="image">Upload Image</label>
+          <input type="file" id="image" name="image" accept="image/*" required />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="ingredients">Ingredients</label>
+          <textarea id="ingredients" name="ingredients" rows="6" required></textarea>
+        </div>
+
+        <button type="submit" class="share-button">Share</button>
+      </form>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+
+  <script>
+    document.getElementById('recipeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const submitButton = e.target.querySelector('.share-button');
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sharing...';
+
+      try {
+        const response = await fetch('/recipes/share', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const text = await response.text();
+
+        try {
+          const data = JSON.parse(text);
+
+          if (response.ok && data.message === 'Recipe shared successfully') {
+            showPopup();
+            e.target.reset();
+          } else {
+            alert('Error: ' + (data.message || 'Unknown error'));
+          }
+        } catch (jsonError) {
+          alert('Response is not valid JSON. Check console.');
+          console.error('JSON parse error:', jsonError);
+        }
+      } catch (networkError) {
+        alert('Network error: ' + networkError.message);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Share';
+      }
+    });
+
+    function showPopup() {
+      document.getElementById('overlay').classList.add('show');
+      document.getElementById('successPopup').classList.add('show');
+    }
+
+    document.getElementById('okButton').addEventListener('click', () => {
+      document.getElementById('overlay').classList.remove('show');
+      document.getElementById('successPopup').classList.remove('show');
+    });
+  </script>
+</body>
+</html>

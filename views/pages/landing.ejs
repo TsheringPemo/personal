@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>bhutanessRECIPE - Bringing Flavors to Life</title>
+  <link rel="stylesheet" href="/css/landing.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">bhutanessRECIPE</div>
+      <div class="nav-buttons">
+        <a href="/signup" class="btn">Sign Up</a>
+        <a href="/login" class="btn">Log In</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="slider">
+        <div class="slide active" style="background-image: url('/images/p.jpeg')"></div>
+        <div class="slide" style="background-image: url('/images/chicken curry.jpg')"></div>
+        <div class="slide" style="background-image: url('/images/Emadatshi.jpg')"></div>
+        <div class="slide" style="background-image: url('/images/Egg Curry.jpg')"></div>
+        <div class="slide" style="background-image: url('/images/Kewa Datshi.jpg')"></div>
+        <div class="slide" style="background-image: url('/images/Datshi.jpeg')"></div>
+        <div class="slide" style="background-image: url('/images/Sag Jaju.jpg')"></div>
+        <div class="slide" style="background-image: url('/images/Shamu Datshi.jpg')"></div>
+      </div>
+      <h1>Bringing Flavors to Life</h1>
+      <p>Discover authentic Bhutanese recipes and culinary traditions</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+    const slideInterval = 5000; // 5 seconds
+
+    function nextSlide() {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }
+
+    setInterval(nextSlide, slideInterval);
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - bhutanessRECIPE</title>
+  <link rel="stylesheet" href="/css/signup.css" />
+  <style>
+    .input-error {
+      color: red;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <div class="signup-box">
+      <div class="signup-header">
+        <span class="icon">👤</span>
+        <h2>Sign Up</h2>
+      </div>
+
+      <% if (message) { %>
+        <div class="error-message"><%= message %></div>
+      <% } %>
+
+      <form action="/signup" method="POST" class="signup-form" id="signupForm">
+        <div class="form-group">
+          <input type="text" name="fullName" id="fullName" placeholder="Full Name" required />
+          <div id="fullNameError" class="input-error"></div>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" id="email" placeholder="Email" required />
+          <div id="emailError" class="input-error"></div>
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" id="password" placeholder="Password" required />
+          <div id="passwordError" class="input-error"></div>
+        </div>
+        <div class="form-group">
+          <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required />
+          <div id="confirmError" class="input-error"></div>
+        </div>
+        <button type="submit">Sign Up</button>
+        <div style="margin-top: 1rem; text-align: center;">
+          Already have an account? <a href="/login">Log in</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const fullName = document.getElementById('fullName');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+
+    const fullNameError = document.getElementById('fullNameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const confirmError = document.getElementById('confirmError');
+
+    fullName.addEventListener('input', () => {
+      const nameRegex = /^[A-Za-z\s]+$/;
+      fullNameError.textContent = nameRegex.test(fullName.value) ? '' : 'Only letters and spaces are allowed.';
+    });
+
+    email.addEventListener('input', () => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      emailError.textContent = emailRegex.test(email.value) ? '' : 'Please enter a valid email address.';
+    });
+
+    password.addEventListener('input', () => {
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/;
+      passwordError.textContent = passwordRegex.test(password.value)
+        ? ''
+        : 'Must include a letter, number & special character.';
+    });
+
+    confirmPassword.addEventListener('input', () => {
+      confirmError.textContent =
+        confirmPassword.value === password.value ? '' : 'Passwords do not match.';
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', function (e) {
+      if (
+        fullNameError.textContent ||
+        emailError.textContent ||
+        passwordError.textContent ||
+        confirmError.textContent
+      ) {
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>

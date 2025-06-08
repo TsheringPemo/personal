@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes - bhutaneseRECIPE</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/recipes.css">
+</head>
+<body>
+    <%- include('../partials/header', { path: '/recipes' }) %>
+
+    <main class="recipes-container">
+        <h1>Recipes</h1>
+
+        <div class="recipes-grid">
+            <% if (recipes.length === 0) { %>
+                <p>No approved recipes available at the moment.</p>
+            <% } else { %>
+                <% recipes.forEach(recipe => { %>
+                    <div class="recipes-card">
+                        <img src="<%= recipe.image %>" alt="<%= recipe.recipe_name %>">
+                        <div class="recipes-info">
+                            <h3><%= recipe.recipe_name %></h3>
+                            <p><%= recipe.description %></p>
+                            <details>
+                                <summary>Ingredients</summary>
+                                <p><%= recipe.ingredients %></p>
+                            </details>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } %>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+
+    <!-- Modal (if you plan to use in future) -->
+    <div id="recipe-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="recipe-details"></div>
+        </div>
+    </div>
+
+    <script>
+        // Modal JS (kept for future use)
+        document.querySelector('.close').onclick = function () {
+            document.getElementById('recipe-modal').style.display = "none";
+        };
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('recipe-modal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>
