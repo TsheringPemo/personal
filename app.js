@@ -31,6 +31,7 @@ app.get('/share-recipe', (req, res) => {
   res.render('pages/share-recipe');
 });
 
+
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const recipeRoutes = require('./routes/recipeRoutes');
@@ -39,6 +40,17 @@ const adminRoutes = require('./routes/adminRoutes');
 app.use('/', authRoutes);
 app.use('/', recipeRoutes);
 app.use('/admin', adminRoutes);
+
+// Test DB Route
+app.get('/test-db', async (req, res) => {
+  try {
+    const dbName = await db.one('SELECT current_database()');
+    res.send(`✅ Connected to database: ${dbName.current_database}`);
+  } catch (err) {
+    console.error('❌ Database connection error:', err.message);
+    res.status(500).send('❌ Database connection error');
+  }
+});
 
 // Check if tables exist
 const checkTables = async () => {

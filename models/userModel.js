@@ -1,5 +1,6 @@
 const db = require('../config/db');
 
+// ✅ Create the users table
 const createUserTable = async () => {
   try {
     await db.none(`
@@ -12,10 +13,23 @@ const createUserTable = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
-    console.log("✅ User table created.");
+    console.log("✅ 'users' table created.");
   } catch (err) {
-    console.error("❌ Error creating user table:", err.message);
+    console.error("❌ Error creating 'users' table:", err.message);
   }
 };
 
-module.exports = { createUserTable };
+// ✅ Check if users table exists (optional)
+const checkUserTable = async () => {
+  try {
+    await db.any('SELECT * FROM users LIMIT 1');
+    console.log('✅ Users table exists');
+  } catch (err) {
+    console.error('❌ Users table does NOT exist:', err.message);
+  }
+};
+
+module.exports = {
+  createUserTable,
+  checkUserTable,
+};
