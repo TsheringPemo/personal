@@ -1,6 +1,6 @@
+// tables/recipesTable.js
 const db = require('../config/db');
 
-// ✅ Create the recipes table
 const createRecipesTable = async () => {
   try {
     await db.none(`
@@ -12,32 +12,16 @@ const createRecipesTable = async () => {
         ingredients TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         is_approved BOOLEAN DEFAULT false,
-        created_by INTEGER,
+        created_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
         image VARCHAR(255),
-        status VARCHAR(20) DEFAULT 'pending',
-        CONSTRAINT recipes_created_by_fkey FOREIGN KEY (created_by)
-          REFERENCES users (id)
-          ON UPDATE NO ACTION
-          ON DELETE NO ACTION
+        status VARCHAR(20) DEFAULT 'pending'
       );
     `);
-    console.log("✅ 'recipes' table created.");
+    console.log("✅ 'recipes' table created successfully");
   } catch (err) {
     console.error("❌ Error creating 'recipes' table:", err.message);
+    throw err;
   }
 };
 
-// ✅ Check if recipes table exists (optional)
-const checkRecipesTable = async () => {
-  try {
-    await db.any('SELECT * FROM recipes LIMIT 1');
-    console.log('✅ Recipes table exists');
-  } catch (err) {
-    console.error('❌ Recipes table does NOT exist:', err.message);
-  }
-};
-
-module.exports = {
-  createRecipesTable,
-  checkRecipesTable,
-};
+module.exports = createRecipesTable;
