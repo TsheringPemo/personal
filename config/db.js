@@ -1,33 +1,23 @@
 // config/db.js
 
-// Import pg-promise
-const pgp = require('pg-promise')({
-  // Optional initialization options can go here
+const pgp = require('pg-promise')();
+
+// Initialize database connection using Render's DATABASE_URL
+const db = pgp({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // Required by Render's PostgreSQL
+  },
 });
 
-// Load environment variables from .env file
-require('dotenv').config();
-
-// Initialize database connection using environment variables
-const db = pgp({
-  host: process.env.DB_HOST || 'localhost',
-  port: 5432,
-  database: process.env.DB_NAME || 'userAuth',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASS || 'your_password_here',
-  ssl: {
-  rejectUnauthorized: false // set to true if you want to enforce ssl certificate validation
-  }
-  });
-
-// Log connection success (optional)
+// Optional: Test connection on startup
 db.connect()
   .then(obj => {
-    obj.done(); // success, release the connection
-    console.log('✅ Connected to PostgreSQL database');
+    obj.done(); // success, release connection
+    console.log('✅ Connected to PostgreSQL database on Render');
   })
   .catch(error => {
-    console.error('❌ Error connecting to database:', error.message || error);
+    console.error('❌ Error connecting to PostgreSQL:', error.message || error);
   });
 
 module.exports = db;
