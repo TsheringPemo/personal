@@ -4,10 +4,7 @@ const pgp = require('pg-promise')();
 
 // Initialize database connection using Render's DATABASE_URL
 const db = pgp({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, // Required by Render's PostgreSQL
-  },
+  connectionString: process.env.DATABASE_URL
 });
 
 // Optional: Test connection on startup
