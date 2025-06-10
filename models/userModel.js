@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-// Function to create users table
+// ✅ Create the users table
 const createUserTable = async () => {
   try {
     await db.none(`
@@ -19,8 +19,17 @@ const createUserTable = async () => {
   }
 };
 
-// (Optional) Add future model functions here, e.g. createUser, findUserByEmail, etc.
+// ✅ Check if users table exists (optional)
+const checkUserTable = async () => {
+  try {
+    await db.any('SELECT * FROM users LIMIT 1');
+    console.log('✅ Users table exists');
+  } catch (err) {
+    console.error('❌ Users table does NOT exist:', err.message);
+  }
+};
 
 module.exports = {
   createUserTable,
+  checkUserTable,
 };
