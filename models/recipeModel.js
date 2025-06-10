@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-// Function to create recipes table
+// ✅ Create the recipes table
 const createRecipesTable = async () => {
   try {
     await db.none(`
@@ -27,16 +27,17 @@ const createRecipesTable = async () => {
   }
 };
 
-// Sample data operation function
-const shareRecipe = async (name, description, ingredients, image) => {
-  const query = `
-    INSERT INTO recipes (recipe_name, description, ingredients, image, status)
-    VALUES ($1, $2, $3, $4, 'pending')
-  `;
-  await db.none(query, [name, description, ingredients, image]);
+// ✅ Check if recipes table exists (optional)
+const checkRecipesTable = async () => {
+  try {
+    await db.any('SELECT * FROM recipes LIMIT 1');
+    console.log('✅ Recipes table exists');
+  } catch (err) {
+    console.error('❌ Recipes table does NOT exist:', err.message);
+  }
 };
 
 module.exports = {
   createRecipesTable,
-  shareRecipe,
+  checkRecipesTable,
 };
