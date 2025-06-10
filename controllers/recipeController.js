@@ -1,6 +1,6 @@
 // controllers/recipeController.js
 const Recipe = require('../models/recipeModel');
-
+const user = require('../models/userModel');
 exports.getAllRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.findAll();
