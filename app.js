@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -6,8 +5,10 @@ const session = require('express-session');
 require('dotenv').config();
 
 const db = require('./config/db');
-const { createUserTable } = require('./tables/usersTable');
-const createRecipesTable = require('./tables/recipesTable');
+
+// ✅ Updated paths to your actual model files
+const { createUserTable } = require('./models/usersModel');
+const createRecipesTable = require('./models/recipeModel');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -72,13 +73,10 @@ app.listen(PORT, async () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 
   try {
-    // ✅ Create tables if they don't exist
     await createUserTable();
     await createRecipesTable();
-
-    // ✅ Check that tables exist
     await checkTables();
   } catch (err) {
-    console.error('❌ Error during app startup:', err.message);
+    console.error('❌ Error during startup:', err.message);
   }
 });
