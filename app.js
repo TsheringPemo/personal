@@ -7,7 +7,7 @@ require('dotenv').config();
 const db = require('./config/db');
 
 // ✅ Updated paths to your actual model files
-const { createUserTable } = require('./models/usersModel');
+const { createUserTable } = require('./models/userModel');
 const createRecipesTable = require('./models/recipeModel');
 
 const app = express();
