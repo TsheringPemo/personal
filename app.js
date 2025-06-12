@@ -1,3 +1,4 @@
+// app.js
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -5,6 +6,8 @@ const session = require('express-session');
 require('dotenv').config();
 
 const db = require('./config/db');
+const { createUserTable } = require('./tables/usersTable');
+const createRecipesTable = require('./tables/recipesTable');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,7 +16,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public'))); // ✅ One static dir only
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'secretkey',
@@ -30,7 +33,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.get('/share-recipe', (req, res) => {
   res.render('pages/share-recipe');
 });
-
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
@@ -68,5 +70,15 @@ const checkTables = async () => {
 // Start the server
 app.listen(PORT, async () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
-  await checkTables();
+
+  try {
+    // ✅ Create tables if they don't exist
+    await createUserTable();
+    await createRecipesTable();
+
+    // ✅ Check that tables exist
+    await checkTables();
+  } catch (err) {
+    console.error('❌ Error during app startup:', err.message);
+  }
 });
